@@ -11,10 +11,17 @@ const usersSlice = createSlice({
   initialState: { users: [], status: 'idle' },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchUsers.fulfilled, (state, action) => {
-      state.users = action.payload;
-      state.status = 'succeeded';
-    });
+    builder
+      .addCase(fetchUsers.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchUsers.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.users = action.payload;
+      })
+      .addCase(fetchUsers.rejected, (state) => {
+        state.status = 'failed';
+      });
   },
 });
 
