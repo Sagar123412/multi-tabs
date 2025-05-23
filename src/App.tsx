@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import { Tabs, Tab, Box } from '@mui/material';
+import TabOne from './components/tabs/TabOne';
+import TabTwo from './components/tabs/TabTwo';
+import TabThree from './components/tabs/TabThree';
+import TabFour from './components/tabs/TabFour';
+import TabFive from './components/tabs/TabFive';
+import withRenderWrapper from './components/common/withRenderWrapper';
 
-function App() {
-  const [count, setCount] = useState(0)
+const components = [
+  withRenderWrapper(TabOne),
+  withRenderWrapper(TabTwo),
+  withRenderWrapper(TabThree),
+  withRenderWrapper(TabFour),
+  withRenderWrapper(TabFive),
+];
+
+const App: React.FC = () => {
+  const [tabIndex, setTabIndex] = useState(0);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Box>
+      <Tabs value={tabIndex} onChange={(e, val) => setTabIndex(val)}>
+        <Tab label="Wiki" />
+        <Tab label="Navigate + API" />
+        <Tab label="Recursive Task" />
+        <Tab label="Todo List" />
+        <Tab label="Buttons" />
+      </Tabs>
+      <Box sx={{ p: 2 }}>
+        {React.createElement(components[tabIndex], { navigateTo: setTabIndex })}
+      </Box>
+    </Box>
+  );
+};
 
-export default App
+export default App;
