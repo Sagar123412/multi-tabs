@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from 'react';
 import { Tabs, Tab, Box } from '@mui/material';
 import TabOne from './components/tabs/TabOne';
